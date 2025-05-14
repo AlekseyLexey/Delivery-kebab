@@ -1,0 +1,6 @@
+.auth {
+  padding: 20px;
+  @include flex-center;
+  flex-direction: column;
+  gap: 20px;
+}
