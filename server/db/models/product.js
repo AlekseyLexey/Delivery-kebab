@@ -28,7 +28,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       imgURL: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       price: {
         type: DataTypes.INTEGER,
@@ -42,13 +41,6 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           min: 1,
           max: 99,
-        },
-      },
-      endPrice: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-          min: 1,
         },
       },
       courier_id: {
