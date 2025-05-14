@@ -1,5 +1,6 @@
 const { Product, User } = require("../../db/models");
 const HttpError = require("../exceptions/HttpError");
+const calculateDiscountedPrice = require("../helpers/calculateDiscountedPrice");
 
 class ProductService {
   static async create(courier_id, data) {
@@ -33,9 +34,17 @@ class ProductService {
       attributes: {
         exclude: ["buyer_id", "status", "updatedAt"],
       },
+      order: [["courier_id", "DESC"]],
+      raw: true,
+      nest: true,
     });
 
-    return products;
+    const productsWithDiscontPrice = products.map((p) => ({
+      ...p,
+      endPrice: calculateDiscountedPrice(p.price, p.discount),
+    }));
+
+    return productsWithDiscontPrice;
   }
 
   static async getById(id) {

@@ -39,6 +39,13 @@ module.exports = {
           city: "Ekb",
           role: "courier",
         },
+        {
+          username: "Egor",
+          email: "egor@test.com",
+          password: hashedPassword,
+          city: "Khv",
+          role: "courier",
+        },
       ],
       {}
     );

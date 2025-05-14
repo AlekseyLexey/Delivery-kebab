@@ -41,7 +41,7 @@ module.exports = {
         onUpdate: "CASCADE",
       },
       status: {
-        type: Sequelize.ENUM("available", "reserved", "sold"),
+        type: Sequelize.ENUM("available", "reserved", "delivery", "sold"),
         allowNull: false,
         defaultValue: "available",
       },
