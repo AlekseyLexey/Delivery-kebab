@@ -20,7 +20,7 @@ module.exports = {
         onUpdate: "CASCADE",
       },
       refreshToken: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,
