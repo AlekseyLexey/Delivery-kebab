@@ -9,9 +9,6 @@ const initialState: IFormData = {
   role: "",
 };
 
-// interface IProps {
-// }
-
 const AuthForm = ({ onSubmit, formType }) => {
   const [formData, setFormData] = useState<IFormData>(initialState);
 
