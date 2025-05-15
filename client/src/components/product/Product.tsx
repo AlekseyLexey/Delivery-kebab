@@ -1,8 +1,12 @@
-import type { IProductType } from './type';
 import React from 'react';
+import type { IProductType } from './type';
 
+interface ProductProps {
+    product: IProductType,
+    handleClick: (id:number) => void
+}
 
-function Product( { product }: { product: IProductType[] }): React.JSX.Element {
+function Product( { product, handleClick }: ProductProps): React.JSX.Element {
 
 
     return (
