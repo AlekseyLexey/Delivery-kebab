@@ -26,7 +26,7 @@ function Products(): React.JSX.Element {
       <div>Products</div>
       <div>
         {products.map((p) => {
-          return <Product product={p} handleClick={handleClick} />;
+          return <Product key={p.id} product={p} handleClick={handleClick} />;
         })}
       </div>
     </>
