@@ -14,6 +14,7 @@ module.exports = {
         {
           username: "Alex",
           email: "alex@test.com",
+          phone: "89998887771",
           password: hashedPassword,
           city: "Хабаровск",
           role: "customer",
@@ -22,6 +23,7 @@ module.exports = {
         {
           username: "Kirill",
           email: "kirill@test.com",
+          phone: "89998887772",
           password: hashedPassword,
           city: "Хабаровск",
           role: "courier",
@@ -30,6 +32,7 @@ module.exports = {
         {
           username: "Nick",
           email: "nick@test.com",
+          phone: "89998887773",
           password: hashedPassword,
           city: "Владивосток",
           role: "customer",
@@ -38,6 +41,7 @@ module.exports = {
         {
           username: "Dima",
           email: "dima@test.com",
+          phone: "89998887774",
           password: hashedPassword,
           city: "Владивосток",
           role: "courier",
@@ -46,6 +50,7 @@ module.exports = {
         {
           username: "Egor",
           email: "egor@test.com",
+          phone: "89998887775",
           password: hashedPassword,
           city: "Хабаровск",
           role: "courier",

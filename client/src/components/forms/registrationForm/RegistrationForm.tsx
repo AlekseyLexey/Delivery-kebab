@@ -6,6 +6,7 @@ import "../form.css";
 
 const initialState: IRegistrationFormData = {
   username: "",
+  phone: "",
   email: "",
   password: "",
   city: "",
@@ -50,7 +51,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSubmit }) => {
           onChange={handleChange}
           type="text"
           name="username"
-          placeholder="username"
+          placeholder="User Name"
         />
         <Input
           labelText="Почта"
@@ -58,7 +59,15 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSubmit }) => {
           onChange={handleChange}
           type="email"
           name="email"
-          placeholder="email"
+          placeholder="Email"
+        />
+        <Input
+          labelText="Телефон"
+          value={formData.phone}
+          onChange={handleChange}
+          type="text"
+          name="phone"
+          placeholder="Phone"
         />
         <select name="city" value={formData.city} onChange={handleChange}>
           {CITIES.map((city) => (
@@ -73,7 +82,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSubmit }) => {
           onChange={handleChange}
           type="password"
           name="password"
-          placeholder="password"
+          placeholder="Password"
         />
 
         <select name="role" value={formData.role} onChange={handleChange}>

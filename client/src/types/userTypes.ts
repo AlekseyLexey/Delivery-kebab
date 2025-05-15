@@ -24,6 +24,7 @@ export interface IAuthFormData {
 
 export interface IRegistrationFormData extends IAuthFormData {
   username: string;
+  phone: string;
   city: City | "";
   role: UserRole | "";
 }
@@ -31,6 +32,7 @@ export interface IRegistrationFormData extends IAuthFormData {
 export interface IUser {
   id: number;
   username: string;
+  phone: string;
   email: string;
   city: string;
   role: UserRole;
