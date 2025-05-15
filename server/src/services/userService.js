@@ -93,9 +93,18 @@ const refreshService = async (refreshToken) => {
   };
 };
 
+const updateUserService = async (id, data) => {
+  const user = await User.findByPk(id);
+  if (!user) throw new HttpError(404, "Пользователь не найден");
+
+  await user.update(data);
+  return user;
+};
+
 module.exports = {
   registrationService,
   loginService,
   logoutService,
   refreshService,
+  updateUserService,
 };

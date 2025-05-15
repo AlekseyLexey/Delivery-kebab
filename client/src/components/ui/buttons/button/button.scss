@@ -1,0 +1,73 @@
+@use "sass:color";
+
+.button {
+  min-width: 100px;
+  min-height: 60px;
+  background-color: $primary-color;
+  cursor: pointer;
+  transition: $transition;
+  font-size: 16px;
+  font-weight: $fw-bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: $br;
+  padding: 8px;
+  color: var(--text-color);
+  @include flex-center;
+
+  &:hover {
+    background-color: $hover-color;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transform: translateY(2px);
+  }
+
+  &:focus {
+    background-color: color.adjust($hover-color, $lightness: -10%);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  &__loading {
+    background-color: $loading-color !important;
+    color: #000;
+  }
+
+  &__error {
+    background-color: $error-color !important;
+  }
+
+  &__green {
+    background-color: $buy-color !important;
+  }
+
+  &__green:hover {
+    background-color: $buy-hover-color !important;
+  }
+}
+
+.theme-button {
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  transition: $transition;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: $br;
+  @include flex-center;
+
+  &:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transform: translateY(2px);
+  }
+}

@@ -3,6 +3,7 @@ const {
   loginService,
   logoutService,
   refreshService,
+  updateUserService,
 } = require("../services/userService");
 const cookieConfig = require("../config/cookieConfig");
 
@@ -62,4 +63,17 @@ const refresh = async (req, res, next) => {
   }
 };
 
-module.exports = { registration, login, logout, refresh };
+const updateUser = async (req, res, next) => {
+  try {
+    const { id } = res.locals.user;
+    const data = req.body;
+
+    const newUserData = await updateUserService(id, data);
+
+    return res.status(200).json(newUserData);
+  } catch (e) {
+    next(e);
+  }
+};
+
+module.exports = { registration, login, logout, refresh, updateUser };
