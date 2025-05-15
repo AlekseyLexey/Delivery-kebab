@@ -5,6 +5,7 @@ const {
   login,
   logout,
   refresh,
+  updateUser,
 } = require("../controllers/userController");
 const productsRoute = require("./api/productsRoute");
 const busketRoute = require("./api/busketRoute");
@@ -19,6 +20,7 @@ router.post("/registration", registration);
 router.post("/login", login);
 router.post("/logout", logout);
 router.get("/refresh", refresh);
+router.put("/user", authMiddleware, updateUser);
 
 router.use("/products", authMiddleware, productsRoute);
 router.use("/orders", authMiddleware, checkCustomerMiddleware, orderRoute);
