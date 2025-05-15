@@ -17,6 +17,7 @@ module.exports = {
           password: hashedPassword,
           city: "Хабаровск",
           role: "customer",
+          wallet: 100000,
         },
         {
           username: "Kirill",
@@ -24,6 +25,7 @@ module.exports = {
           password: hashedPassword,
           city: "Хабаровск",
           role: "courier",
+          wallet: 0,
         },
         {
           username: "Nick",
@@ -31,6 +33,7 @@ module.exports = {
           password: hashedPassword,
           city: "Владивосток",
           role: "customer",
+          wallet: 0,
         },
         {
           username: "Dima",
@@ -38,6 +41,7 @@ module.exports = {
           password: hashedPassword,
           city: "Владивосток",
           role: "courier",
+          wallet: 0,
         },
         {
           username: "Egor",
@@ -45,6 +49,7 @@ module.exports = {
           password: hashedPassword,
           city: "Хабаровск",
           role: "courier",
+          wallet: 0,
         },
       ],
       {}

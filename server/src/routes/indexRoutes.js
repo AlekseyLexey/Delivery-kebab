@@ -8,6 +8,7 @@ const {
 } = require("../controllers/userController");
 const productsRoute = require("./api/productsRoute");
 const busketRoute = require("./api/busketRoute");
+const orderRoute = require("./api/ordersRoutes");
 
 const authMiddleware = require("../middlewares/authMiddleware");
 const checkCustomerMiddleware = require("../middlewares/checkCustomerMiddleware");
@@ -18,6 +19,7 @@ router.post("/logout", logout);
 router.get("/refresh", refresh);
 
 router.use("/products", authMiddleware, productsRoute);
+router.use("/orders", authMiddleware, orderRoute);
 router.use("/busket", authMiddleware, checkCustomerMiddleware, busketRoute);
 
 module.exports = router;
