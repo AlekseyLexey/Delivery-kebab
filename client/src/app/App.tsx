@@ -1,15 +1,19 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
-import Buscket from "../pages/buscket/Buscket";
-import CourierOrders from "../pages/courierorders/CourierOrders";
-import CourierProducts from "../pages/courierproducts/CourierProducts";
-import NewProduct from "../pages/newproduct/NewProduct";
-import Orders from "../pages/orders/Orders";
-import Products from "../pages/products/Products";
-import Profile from "../pages/profile/Profile";
+import {
+  Auth,
+  Buscket,
+  CourierOrders,
+  CourierProducts,
+  NewProduct,
+  Orders,
+  Products,
+  Profile,
+} from "../pages/index";
 import { useEffect, useState } from "react";
-import Auth from "../pages/auth/Auth";
 import type { IUser, IUserPath } from "../types/userTypes";
-import { refreshReq } from "../services/api/authService";
+import { refreshReq, logoutReq } from "../services/api/authService";
+import { UserContext } from "./UserContex";
+import Header from "../components/header/Header";
 
 const userPath: IUserPath = {
   courier: "/profile",
@@ -27,32 +31,31 @@ function App() {
     //eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    if (!user) {
-      navigate("/auth");
-    }
-  }, [user, navigate]);
-
-  const handleLogOut = () => {
+  const handleLogOut = async (): Promise<void> => {
+    await logoutReq();
     setUser(null);
+    navigate("/auth");
   };
 
-  const handleLogIn = (user: IUser) => {
+  const handleLogIn = (user: IUser): void => {
     setUser(user);
     navigate(userPath[user.role]);
   };
 
   return (
-    <Routes>
-      <Route path="/auth" element={<Auth handleLogIn={handleLogIn} />} />
-      <Route path="/products" element={<Products />} />
-      <Route path="/new-product" element={<NewProduct />} />
-      <Route path="/orders" element={<Orders />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/buscket" element={<Buscket />} />
-      <Route path="/courier-orders" element={<CourierOrders />} />
-      <Route path="/courier-products" element={<CourierProducts />} />
-    </Routes>
+    <UserContext.Provider value={{ user, handleLogOut, handleLogIn, setUser }}>
+      <Header />
+      <Routes>
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/new-product" element={<NewProduct />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/buscket" element={<Buscket />} />
+        <Route path="/courier-orders" element={<CourierOrders />} />
+        <Route path="/courier-products" element={<CourierProducts />} />
+      </Routes>
+    </UserContext.Provider>
   );
 }
 

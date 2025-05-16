@@ -1,0 +1,12 @@
+.header {
+  width: 100vw;
+  background-color: #888888;
+  z-index: 1000;
+
+  &__content {
+    display: flex;
+    height: 100px;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

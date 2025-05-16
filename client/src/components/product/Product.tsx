@@ -1,5 +1,6 @@
 import React from "react";
 import type { IProductType } from "./type";
+import Button from "../ui/buttons/button/Button";
 
 interface ProductProps {
   product: IProductType;
@@ -16,9 +17,10 @@ function Product({ product, handleClick }: ProductProps): React.JSX.Element {
         <div>Исходная цена: {product.price} </div>
         <div>Скидка: {product.discount} </div>
         <div>Цена со скидкой: {product.endPrice} </div>
-        <button onClick={() => handleClick(product.id)}>
-          Добавить в корзину
-        </button>
+        <Button
+          buttonText="Добавить в корзину"
+          onClick={() => handleClick(product.id)}
+        />
       </div>
     </section>
   );

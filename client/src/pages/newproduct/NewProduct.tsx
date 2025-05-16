@@ -1,44 +1,44 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function NewProduct() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    title: '',
+    title: "",
     image: null,
-    location: '',
-    originalPrice: '',
-    discount: ''
+    location: "",
+    originalPrice: "",
+    discount: "",
   });
-
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    navigate('/courier-products');
+
+    navigate("/courier-products");
   };
 
   return (
-    <div 
+    <div
       className="min-h-screen flex flex-col items-center justify-center p-4"
-      style={{ 
-        position: 'fixed',
-        top: '60px',
+      style={{
+        position: "fixed",
+        top: "60px",
         left: 0,
         right: 0,
         bottom: 0,
-        textAlign: 'center',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        background: 'linear-gradient(to bottom, #f9f9f9, #e0e0e0)',
-        overflow: 'auto'
+        textAlign: "center",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        background: "linear-gradient(to bottom, #f9f9f9, #e0e0e0)",
+        overflow: "auto",
       }}
     >
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-2xl font-bold text-center mb-6">Добавить непринятый заказ</h1>
+        <h1 className="text-2xl font-bold text-center mb-6">
+          Добавить непринятый заказ
+        </h1>
         <form className="space-y-4">
           <div className="flex flex-col items-center">
             <label className="block text-sm font-medium text-gray-700 mb-1 w-full text-center">
@@ -65,7 +65,6 @@ function NewProduct() {
               />
             </div>
           </div>
-
 
           <div className="flex flex-col items-center">
             <label className="block text-sm font-medium text-gray-700 mb-1 w-full text-center">

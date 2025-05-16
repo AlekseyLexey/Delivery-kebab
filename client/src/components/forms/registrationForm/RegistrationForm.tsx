@@ -22,6 +22,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSubmit }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.city) {
+      alert("Выберите город!");
+      return;
+    }
     if (!formData.role) {
       alert("Выберите роль!");
       return;
@@ -70,6 +74,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSubmit }) => {
           placeholder="Phone"
         />
         <select name="city" value={formData.city} onChange={handleChange}>
+          <option value="">-- Выберите город --</option>
           {CITIES.map((city) => (
             <option key={city} value={city}>
               {city}

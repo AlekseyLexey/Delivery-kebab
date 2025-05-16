@@ -97,7 +97,11 @@ const updateUserService = async (id, data) => {
   const user = await User.findByPk(id);
   if (!user) throw new HttpError(404, "Пользователь не найден");
 
-  await user.update(data);
+  const topUpWalletData = data.wallet
+    ? { ...user, wallet: Number(user.wallet) + Number(data.wallet) }
+    : user;
+
+  await user.update(topUpWalletData);
   return user;
 };
 

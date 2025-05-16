@@ -1,12 +1,11 @@
 @use "sass:color";
 
 .button {
-  min-width: 100px;
-  min-height: 60px;
+  min-width: 80px;
+  min-height: 40px;
   background-color: $primary-color;
   cursor: pointer;
   transition: $transition;
-  font-size: 16px;
   font-weight: $fw-bold;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: $br;

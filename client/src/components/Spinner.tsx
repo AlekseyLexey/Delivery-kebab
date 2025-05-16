@@ -1,5 +1,3 @@
-import "./spinner.scss";
-
 const Spiner = () => {
   return (
     <div

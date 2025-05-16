@@ -1,4 +1,5 @@
 export type UserRole = "courier" | "customer";
+
 export interface IUserPath {
   courier: "/profile";
   customer: "/products";

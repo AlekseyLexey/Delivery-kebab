@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import AuthForm from "../../components/forms/authForm/AuthForm";
 import RegistrationForm from "../../components/forms/registrationForm/RegistrationForm";
 import Button from "../../components/ui/buttons/button/Button";
@@ -6,16 +6,19 @@ import { authReq } from "../../services/api/authService";
 import type {
   IAuthFormData,
   IRegistrationFormData,
-  IUser,
 } from "../../types/userTypes";
 import "./auth.scss";
+import { UserContext } from "../../app/UserContex";
 
-interface AuthProps {
-  handleLogIn(user: IUser): void;
-}
-
-const Auth: React.FC<AuthProps> = ({ handleLogIn }) => {
+const Auth: React.FC = () => {
   const [isRegistration, setRegistration] = useState<boolean>(true);
+  const contex = useContext(UserContext);
+
+  if (!contex) {
+    return;
+  }
+
+  const { handleLogIn } = contex;
 
   const handleSubmit = async (
     formData: IAuthFormData | IRegistrationFormData
@@ -28,16 +31,12 @@ const Auth: React.FC<AuthProps> = ({ handleLogIn }) => {
   return (
     <div className="auth">
       {isRegistration ? (
-        <>
-          <Button onClick={() => setRegistration(false)} buttonText="Войти" />
-        </>
+        <Button onClick={() => setRegistration(false)} buttonText="Войти" />
       ) : (
-        <>
-          <Button
-            onClick={() => setRegistration(true)}
-            buttonText="Регистрация"
-          />
-        </>
+        <Button
+          onClick={() => setRegistration(true)}
+          buttonText="Регистрация"
+        />
       )}
       {isRegistration ? (
         <>

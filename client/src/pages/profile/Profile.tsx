@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import UserInfo from "../../components/userInfo/UserInfo";
 
-function Profile() {
+const Profile: React.FC = () => {
   return (
-    <div>Profile</div>
-  )
-}
+    <div className="profile">
+      <UserInfo />
+    </div>
+  );
+};
 
-export default Profile
+export default Profile;
