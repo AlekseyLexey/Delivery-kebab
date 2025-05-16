@@ -19,6 +19,7 @@ function Products(): React.JSX.Element {
 
   async function handleClick(id: number): Promise<void> {
     await $api.post("/busket", { product_id: id });
+    await getProducts();
     alert("Товар добавлен в корзину!");
   }
   return (
