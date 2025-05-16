@@ -4,11 +4,12 @@
 
 import type { IProductType } from "../../components/product/type";
 import $api from "../../configs/axiosConfig";
+import type { IProductFormData } from "../models/productModels";
+import { COURIER } from "./userService";
 
 const PRODUCTS = "/products";
-const COURIER = "/courier";
 
-export const productSrvice = {
+export const productService = {
   getCustomerProducts: async (): Promise<Array<IProductType> | []> => {
     const { data } = await $api.get(`${PRODUCTS}`);
     return data;
@@ -23,9 +24,11 @@ export const productSrvice = {
     await $api.delete(`${PRODUCTS}/${id}`);
   },
 
-  //! Подписать тип formData!
-  update: async (formData): Promise<IProductType> => {
-    const { data } = await $api.put(`${PRODUCTS}`);
+  update: async (
+    id: number,
+    formData: IProductFormData
+  ): Promise<IProductType> => {
+    const { data } = await $api.put(`${PRODUCTS}/${id}`, formData);
     return data;
   },
 };

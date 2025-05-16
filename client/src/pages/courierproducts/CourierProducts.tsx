@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import type { IProductType } from "../../components/product/type";
-import { productSrvice } from "../../services/api/productService";
+import { productService } from "../../services/api/productService";
 import Product from "../../components/product/Product";
 import Button from "../../components/ui/buttons/button/Button";
 import { useNavigate } from "react-router-dom";
@@ -14,12 +14,12 @@ const CourierProducts: React.FC = () => {
   }, []);
 
   const fetchingProducts = async (): Promise<void> => {
-    const products = await productSrvice.getCourierProducts();
+    const products = await productService.getCourierProducts();
     setProducts(products);
   };
 
   const handleDelete = async (id: number): Promise<void> => {
-    await productSrvice.delete(id);
+    await productService.delete(id);
     await fetchingProducts();
   };
 

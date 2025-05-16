@@ -1,9 +1,48 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import type { OrdersType } from "../../types/orderTypes";
+import { orderSrvice } from "../../services/api/orderService";
+import CourierOrderCard from "../../components/courierOrderCard/CourierOrderCard";
+import Button from "../../components/ui/buttons/button/Button";
+import { productService } from "../../services/api/productService";
 
-function CourierOrders() {
+const CourierOrders: React.FC = () => {
+  const [orders, setOrders] = useState<OrdersType>([]);
+
+  useEffect(() => {
+    fetchingOrders();
+  }, []);
+
+  const fetchingOrders = async (): Promise<void> => {
+    const products = await orderSrvice.getCourierOrders();
+    setOrders(products);
+  };
+
+  const handleUpdate = async (id: number): Promise<void> => {
+    const updated = orders[id].products.map(
+      async (product) =>
+        await productService.update(product.id, { status: "sold" })
+    );
+
+    Promise.all(updated).then(console.log);
+    fetchingOrders();
+  };
+
   return (
-    <div>CourierOrders</div>
-  )
-}
+    <div className="courier-orders">
+      <ul className="courier-orders__list">
+        {!orders.length && <h2>Заказов сейчас нет...</h2>}
+        {orders.map((order, index) => (
+          <li key={index} className="courier-orders__item courier-order">
+            <CourierOrderCard order={order} />
+            <Button
+              buttonText="Закрыть заказ"
+              onClick={() => handleUpdate(index)}
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
-export default CourierOrders
+export default CourierOrders;
