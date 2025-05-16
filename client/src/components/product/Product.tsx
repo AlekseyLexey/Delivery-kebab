@@ -10,7 +10,11 @@ function Product({ product }: ProductProps): React.JSX.Element {
     <section>
       <div>
         <div>Название: {product.name}</div>
-        <div>Картинка: {product.imgURL} </div>
+
+        <img
+          src={`http://localhost:3000${product.imgURL}`}
+          alt={product.name}
+        />
         <div>Исходная цена: {product.price} </div>
         <div>Скидка: {product.discount} </div>
         <div>Цена со скидкой: {product.endPrice} </div>

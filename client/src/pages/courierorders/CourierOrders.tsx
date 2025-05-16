@@ -23,8 +23,7 @@ const CourierOrders: React.FC = () => {
         await productService.update(product.id, { status: "sold" })
     );
 
-    Promise.all(updated).then(console.log);
-    fetchingOrders();
+    Promise.all(updated).then(() => fetchingOrders());
   };
 
   return (

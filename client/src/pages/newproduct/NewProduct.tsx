@@ -9,7 +9,7 @@ function NewProduct() {
     name: "",
     price: "",
     discount: "",
-    imgURL: "",
+    imgURL: null,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -31,7 +31,18 @@ function NewProduct() {
     setError("");
 
     try {
-      await productService.create(formData);
+      if (formData.imgURL instanceof File) {
+        const formDataToSend: FormData = new FormData();
+        formDataToSend.append("name", formData.name);
+        formDataToSend.append("price", formData.price);
+        formDataToSend.append("discount", formData.discount);
+        formDataToSend.append("imgURL", formData.imgURL);
+
+        await productService.create(formDataToSend);
+      } else {
+        await productService.create(formData);
+      }
+
       navigate("/courier-products");
     } catch (err) {
       setError("Не удалось создать товар. Пожалуйста, попробуйте снова.");

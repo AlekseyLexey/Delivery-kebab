@@ -2,7 +2,7 @@ export interface IProductFormData {
   name: string;
   price: string;
   discount: string;
-  imgURL: File | "";
+  imgURL: File | null;
 }
 import type { ProductStatuses } from "../../types/productTypes";
 

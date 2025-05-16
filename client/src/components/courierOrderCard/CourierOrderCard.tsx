@@ -18,7 +18,7 @@ const CourierOrderCard: React.FC<ICourierOrderCard> = ({ order }) => {
           <li key={p.id} className="order-list__item list-item">
             <h4 className="list-item__title">Продукт: {p.name}</h4>
             <div className="list-item__img-wrapper">
-              <img src={p.imgURL || ""} alt={p.name} />
+              <img src={`http://localhost:3000${p.imgURL}`} alt={p.name} />
             </div>
           </li>
         ))}

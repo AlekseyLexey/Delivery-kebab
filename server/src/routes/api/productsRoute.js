@@ -1,10 +1,16 @@
 const router = require("express").Router();
+const upload = require("../../config/multerConfig");
 const ProductController = require("../../controllers/productController");
 
 const checkCourierMiddleware = require("../../middlewares/checkCourierMiddleware");
 const checkCustomerMiddleware = require("../../middlewares/checkCustomerMiddleware");
 
-router.post("/", checkCourierMiddleware, ProductController.create);
+router.post(
+  "/",
+  checkCourierMiddleware,
+  upload.single("imgURL"),
+  ProductController.create
+);
 router.get("/", checkCustomerMiddleware, ProductController.getAll);
 router.get("/:id", ProductController.getById);
 router.put("/:id", checkCourierMiddleware, ProductController.update);

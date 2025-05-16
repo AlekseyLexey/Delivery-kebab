@@ -4,9 +4,15 @@ class ProductController {
   static async create(req, res, next) {
     try {
       const { id } = res.locals.user;
-      const data = req.body;
+      const { name, price, discount } = req.body;
+      const imgURL = req.file ? `/uploads/${req.file.filename}` : null;
 
-      const product = await ProductService.create(id, data);
+      const product = await ProductService.create(id, {
+        name,
+        price,
+        discount,
+        imgURL,
+      });
 
       return res.status(201).json(product);
     } catch (e) {
@@ -55,6 +61,10 @@ class ProductController {
       const { id } = req.params;
       const courier_id = res.locals.user.id;
       const data = req.body;
+      if (!data.status) {
+        const imgURL = req.file ? `/uploads/${req.file.filename}` : null;
+        data.imgURL = imgURL;
+      }
 
       const product = await ProductService.update(id, courier_id, data);
 

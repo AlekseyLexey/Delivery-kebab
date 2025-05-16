@@ -1,7 +1,3 @@
-// const BASKET = "/busket";
-// const PROFILE = "/profile";
-// const ORDERS = "/orders";
-
 import type { IProductType } from "../../components/product/type";
 import $api from "../../configs/axiosConfig";
 import type {
@@ -23,7 +19,9 @@ export const productService = {
     return data;
   },
 
-  create: async (productData: IProductFormData): Promise<IProductType> => {
+  create: async (
+    productData: IProductFormData | FormData
+  ): Promise<IProductType> => {
     const { data } = await $api.post(`${PRODUCTS}`, productData);
     return data;
   },

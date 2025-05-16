@@ -89,8 +89,6 @@ class ProductService {
       throw new HttpError(403, "Нет прав");
     }
 
-    console.log("data =================>", data);
-
     const [counter, updateProduct] = await Product.update(data, {
       where: { id },
       returning: true,
