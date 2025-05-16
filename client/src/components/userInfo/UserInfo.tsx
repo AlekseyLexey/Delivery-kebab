@@ -1,14 +1,12 @@
-import React, { useContext } from "react";
-import { UserContext } from "../../app/UserContex";
-import Spiner from "../Spinner";
-import ActionCustomerWallet from "../ActionCustomerWallet";
+import React from "react";
+import type { IUser } from "../../types/userTypes";
 
-const UserInfo: React.FC = () => {
-  const contex = useContext(UserContext);
+interface UserInfoProps {
+  user: IUser;
+}
 
-  if (!contex || !contex.user) return <Spiner />;
-
-  const { username, email, phone, wallet, city } = contex.user;
+const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
+  const { username, email, phone, wallet, city } = user;
 
   return (
     <div className="profile-info">
@@ -31,8 +29,6 @@ const UserInfo: React.FC = () => {
       <div className="profile-info__balance">
         <strong>Баланс:</strong> {Number(wallet).toLocaleString("ru-RU")} Руб
       </div>
-
-      <ActionCustomerWallet setUser={contex.setUser} />
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import $api from "../../configs/axiosConfig";
 import Product from "../../components/product/Product";
 import type { IProductType } from "../../components/product/type";
+import Button from "../../components/ui/buttons/button/Button";
 
 function Products(): React.JSX.Element {
   const [products, setProducts] = useState<IProductType[] | []>([]);
@@ -27,7 +28,16 @@ function Products(): React.JSX.Element {
       <div>Products</div>
       <div>
         {products.map((p) => {
-          return <Product key={p.id} product={p} handleClick={handleClick} />;
+          return (
+            <li key={p.id}>
+              <h1>Выбирай</h1>
+              <Product product={p} />;
+              <Button
+                buttonText="Добавить в корзину"
+                onClick={() => handleClick(p.id)}
+              />
+            </li>
+          );
         })}
       </div>
     </>

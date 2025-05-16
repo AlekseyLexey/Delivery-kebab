@@ -47,6 +47,25 @@ class ProductService {
     return productsWithDiscontPrice;
   }
 
+  static async getCourierProducts(courier_id) {
+    const products = await Product.findAll({
+      where: { courier_id, status: "available" },
+      attributes: {
+        exclude: ["buyer_id", "status", "updatedAt"],
+      },
+      order: [["courier_id", "DESC"]],
+      raw: true,
+      nest: true,
+    });
+
+    const productsWithDiscontPrice = products.map((p) => ({
+      ...p,
+      endPrice: calculateDiscountedPrice(p.price, p.discount),
+    }));
+
+    return productsWithDiscontPrice;
+  }
+
   static async getById(id) {
     const product = await Product.findOne({
       where: { id },

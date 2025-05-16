@@ -26,6 +26,18 @@ class ProductController {
     }
   }
 
+  static async getCourierProducts(req, res, next) {
+    try {
+      const { id } = res.locals.user;
+
+      const products = await ProductService.getCourierProducts(id);
+
+      return res.status(200).json(products);
+    } catch (e) {
+      next(e);
+    }
+  }
+
   static async getById(req, res, next) {
     try {
       const { id } = req.params;

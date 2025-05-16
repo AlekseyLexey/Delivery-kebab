@@ -15,6 +15,7 @@ const courierOrderRoute = require("./api/courierOrdersRoute");
 const authMiddleware = require("../middlewares/authMiddleware");
 const checkCustomerMiddleware = require("../middlewares/checkCustomerMiddleware");
 const checkCourierMiddleware = require("../middlewares/checkCourierMiddleware");
+const ProductController = require("../controllers/productController");
 
 router.post("/registration", registration);
 router.post("/login", login);
@@ -30,6 +31,12 @@ router.use(
   authMiddleware,
   checkCourierMiddleware,
   courierOrderRoute
+);
+router.get(
+  "/courier/products",
+  authMiddleware,
+  checkCourierMiddleware,
+  ProductController.getCourierProducts
 );
 
 module.exports = router;
