@@ -1,107 +1,135 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { productService } from "../../services/api/productService";
+import type { IProductFormData } from "../../services/models/productModels";
 
 function NewProduct() {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    title: "",
-    image: null,
-    location: "",
-    originalPrice: "",
+  const [formData, setFormData] = useState<IProductFormData>({
+    name: "",
+    price: "",
     discount: "",
+    imgURL: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    navigate("/courier-products");
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFormData({ ...formData, imgURL: e.target.files[0] });
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError("");
+
+    try {
+      await productService.create(formData);
+      navigate("/courier-products");
+    } catch (err) {
+      setError("Не удалось создать товар. Пожалуйста, попробуйте снова.");
+      console.error("Error creating product:", err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center p-4"
       style={{
-        position: "fixed",
-        top: "60px",
-        left: 0,
-        right: 0,
-        bottom: 0,
-        textAlign: "center",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        background: "linear-gradient(to bottom, #f9f9f9, #e0e0e0)",
-        overflow: "auto",
+        padding: "20px",
+        maxWidth: "500px",
+        margin: "0 auto",
+        marginTop: "50px",
       }}
     >
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-2xl font-bold text-center mb-6">
-          Добавить непринятый заказ
-        </h1>
-        <form className="space-y-4">
-          <div className="flex flex-col items-center">
-            <label className="block text-sm font-medium text-gray-700 mb-1 w-full text-center">
-              Название Товара
-            </label>
-            <input
-              type="text"
-              name="title"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md text-center"
-              required
-            />
-          </div>
+      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
+        Добавить новый товар
+      </h2>
 
-          <div className="flex flex-col items-center">
-            <label className="block text-sm font-medium text-gray-700 mb-1 w-full text-center">
-              Изображение товара
-            </label>
-            <div className="w-full flex justify-center">
-              <input
-                type="file"
-                accept="image/*"
-                className="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                required
-              />
-            </div>
-          </div>
+      {error && (
+        <div style={{ color: "red", marginBottom: "15px" }}>{error}</div>
+      )}
 
-          <div className="flex flex-col items-center">
-            <label className="block text-sm font-medium text-gray-700 mb-1 w-full text-center">
-              Цена
-            </label>
-            <input
-              type="number"
-              name="originalPrice"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md text-center"
-              required
-            />
-          </div>
+      <form onSubmit={handleSubmit}>
+        <div style={{ marginBottom: "15px" }}>
+          <label style={{ display: "block", marginBottom: "5px" }}>
+            Название товара:
+          </label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+            required
+            style={{ width: "100%", padding: "8px" }}
+          />
+        </div>
 
-          <div className="flex flex-col items-center">
-            <label className="block text-sm font-medium text-gray-700 mb-1 w-full text-center">
-              Скидка (%)
-            </label>
-            <input
-              type="number"
-              name="discount"
-              min="0"
-              max="100"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md text-center"
-              required
-            />
-          </div>
+        <div style={{ marginBottom: "15px" }}>
+          <label style={{ display: "block", marginBottom: "5px" }}>
+            Цена (руб):
+          </label>
+          <input
+            type="number"
+            name="price"
+            value={formData.price}
+            onChange={handleInputChange}
+            min="1"
+            required
+            style={{ width: "100%", padding: "8px" }}
+          />
+        </div>
 
-          <div className="flex justify-center pt-4">
-            <button
-              type="submit"
-              className="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 transition-colors"
-            >
-              Добавить заказ
-            </button>
-          </div>
-        </form>
-      </div>
+        <div style={{ marginBottom: "15px" }}>
+          <label style={{ display: "block", marginBottom: "5px" }}>
+            Скидка (%):
+          </label>
+          <input
+            type="number"
+            name="discount"
+            value={formData.discount}
+            onChange={handleInputChange}
+            min="0"
+            max="99"
+            style={{ width: "100%", padding: "8px" }}
+          />
+        </div>
+
+        <div style={{ marginBottom: "15px" }}>
+          <label style={{ display: "block", marginBottom: "5px" }}>
+            Изображение товара:
+          </label>
+          <input
+            type="file"
+            name="imgURL"
+            accept="image/*"
+            onChange={handleFileChange}
+            style={{ width: "100%", padding: "8px" }}
+          />
+        </div>
+
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          style={{
+            width: "100%",
+            padding: "10px",
+            backgroundColor: isSubmitting ? "#cccccc" : "#4CAF50",
+            color: "white",
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+          {isSubmitting ? "Создание..." : "Создать товар"}
+        </button>
+      </form>
     </div>
   );
 }
