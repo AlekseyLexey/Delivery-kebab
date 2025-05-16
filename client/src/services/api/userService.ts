@@ -2,6 +2,7 @@ import $api from "../../configs/axiosConfig";
 import type { IUser } from "../../types/userTypes";
 import type { IUpdateWalletData } from "../models/userModels";
 
+export const COURIER = "/courier";
 const USER = "/user";
 
 export const userService = {
