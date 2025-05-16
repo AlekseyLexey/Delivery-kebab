@@ -1,6 +1,7 @@
+
 import React, { useEffect, useState } from "react";
 import type { IProductType } from "../../components/product/type";
-import { productSrvice } from "../../services/api/productService";
+import { productService } from "../../services/api/productService";
 import Product from "../../components/product/Product";
 import Button from "../../components/ui/buttons/button/Button";
 import { useNavigate } from "react-router-dom";
@@ -14,26 +15,50 @@ const CourierProducts: React.FC = () => {
   }, []);
 
   const fetchingProducts = async (): Promise<void> => {
-    const products = await productSrvice.getCourierProducts();
-    setProducts(products);
+    try {
+      const products = await productService.getCourierProducts();
+      setProducts(products);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
   };
 
   const handleDelete = async (id: number): Promise<void> => {
-    await productSrvice.delete(id);
-    await fetchingProducts();
+    try {
+      await productService.delete(id);
+      await fetchingProducts();
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
   };
 
   return (
-    <div className="courier-products">
-      <ul className="courier-products__list">
+    <div className="courier-products" style={{ padding: "20px" }}>
+      <Button 
+        buttonText="Добавить новый товар" 
+        onClick={() => navigate("/new-product")}
+        style={{ marginBottom: "20px" }}
+      />
+      <ul className="courier-products__list" style={{ listStyle: "none", padding: 0 }}>
         {products.map((p) => (
-          <li className="courier-products__item" key={p.id}>
+          <li 
+            className="courier-products__item" 
+            key={p.id}
+            style={{ 
+              border: "1px solid #ddd", 
+              borderRadius: "8px", 
+              padding: "15px", 
+              marginBottom: "15px" 
+            }}
+          >
             <Product product={p} />
-            <Button buttonText="Удалить" onClick={() => handleDelete(p.id)} />
-            <Button
-              buttonText="Изменить"
-              onClick={() => navigate("/new-product")}
-            />
+            <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+              <Button 
+                buttonText="Удалить" 
+                onClick={() => handleDelete(p.id)} 
+                style={{ backgroundColor: "#f44336" }}
+              />
+            </div>
           </li>
         ))}
       </ul>

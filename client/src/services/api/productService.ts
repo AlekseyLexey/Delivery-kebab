@@ -4,11 +4,12 @@
 
 import type { IProductType } from "../../components/product/type";
 import $api from "../../configs/axiosConfig";
+import type { IProductFormData } from "../models/productModels";
 
 const PRODUCTS = "/products";
 const COURIER = "/courier";
 
-export const productSrvice = {
+export const productService = {
   getCustomerProducts: async (): Promise<Array<IProductType> | []> => {
     const { data } = await $api.get(`${PRODUCTS}`);
     return data;
@@ -16,6 +17,11 @@ export const productSrvice = {
 
   getCourierProducts: async (): Promise<Array<IProductType> | []> => {
     const { data } = await $api.get(`${COURIER}/${PRODUCTS}`);
+    return data;
+  },
+
+  create: async (productData: IProductFormData): Promise<IProductType> => {
+    const { data } = await $api.post(`${PRODUCTS}`, productData);
     return data;
   },
 

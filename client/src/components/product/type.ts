@@ -1,7 +1,7 @@
 export interface IProductType {
   id: number;
   name: string;
-  imgURL: null;
+  imgURL: string | null;
   price: number;
   discount: number;
   courier_id: number;
