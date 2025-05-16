@@ -1,9 +1,11 @@
-const { Product, User } = require("../../db/models");
+const { Product, User, Busket } = require("../../db/models");
 const HttpError = require("../exceptions/HttpError");
 const calculateDiscountedPrice = require("../helpers/calculateDiscountedPrice");
 
 class OrderService {
   static async create(buyer_id, productsIds) {
+    console.log('=====>', productsIds);
+    
     const user = await User.findByPk(buyer_id);
 
     const products = await Product.findAll({ where: { id: productsIds } });
@@ -29,6 +31,9 @@ class OrderService {
         where: { id: productsIds },
       }
     );
+    await Busket.destroy({
+      where: { user_id: buyer_id },
+    });
 
     return products;
   }
