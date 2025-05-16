@@ -11,4 +11,5 @@ export interface IProductUpdateFormData {
   imgURL?: string;
   discount?: number;
   status?: ProductStatuses;
+  price?: number;
 }
