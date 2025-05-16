@@ -4,8 +4,6 @@ const calculateDiscountedPrice = require("../helpers/calculateDiscountedPrice");
 
 class OrderService {
   static async create(buyer_id, productsIds) {
-    console.log('=====>', productsIds);
-    
     const user = await User.findByPk(buyer_id);
 
     const products = await Product.findAll({ where: { id: productsIds } });
