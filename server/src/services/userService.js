@@ -111,10 +111,32 @@ const updateUserService = async (id, data) => {
   return user;
 };
 
+
+const updateLocationService = async (userId, lat, lng) => {
+  const user = await User.findByPk(userId);
+  if (!user) throw new HttpError(404, "Пользователь не найден")
+
+  if (user.role !== 'courier') {
+    throw new HttpError(403, "Только курьеры могут обновлять локацию");
+  }
+
+  await user.update({ location: {lat, lng } });
+  return user
+}
+
+const getLocationService = async (userId) => {
+  const user = await User.findByPk(userId);
+  
+  if(!user) throw new HttpError(404, "Пользователь не найден");
+  return user.location
+}
+
 module.exports = {
   registrationService,
   loginService,
   logoutService,
   refreshService,
   updateUserService,
+  updateLocationService,
+  getLocationService
 };

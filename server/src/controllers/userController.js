@@ -4,8 +4,11 @@ const {
   logoutService,
   refreshService,
   updateUserService,
+  updateLocationService,
+  getLocationService 
 } = require("../services/userService");
 const cookieConfig = require("../config/cookieConfig");
+const HttpError = require("../exceptions/HttpError");
 
 const registration = async (req, res, next) => {
   try {
@@ -76,4 +79,29 @@ const updateUser = async (req, res, next) => {
   }
 };
 
-module.exports = { registration, login, logout, refresh, updateUser };
+const updateLocation = async (req, res, next) => {
+  try {
+    const { id } = res.locals.user;
+    // const { lat, lng } = req.body; 
+
+    if(!lat || !lng) {
+      throw new HttpError(400, "Координаты обязательны!");
+    }
+    const user = await updateLocationService(id, lat, lng);
+    return res.status(200).json(user.location)
+  } catch (e) {
+    next(e);
+  }
+};
+
+const getLocation = async (req, res, next) => {
+  try{
+    const { userId } = req.params;
+    const location = await getLocationService(userId);
+    return res.status(200).json(location);
+  } catch (e) {
+    next(e);
+  }
+}
+
+module.exports = { registration, login, logout, refresh, updateUser, updateLocation, getLocation };

@@ -6,6 +6,8 @@ const {
   logout,
   refresh,
   updateUser,
+  updateLocation,
+  getLocation
 } = require("../controllers/userController");
 const productsRoute = require("./api/productsRoute");
 const busketRoute = require("./api/busketRoute");
@@ -22,6 +24,9 @@ router.post("/login", login);
 router.post("/logout", logout);
 router.get("/refresh", refresh);
 router.put("/user", authMiddleware, updateUser);
+router.put("/courier/location", authMiddleware, checkCourierMiddleware, updateLocation);
+
+
 
 router.use("/products", authMiddleware, productsRoute);
 router.use("/orders", authMiddleware, checkCustomerMiddleware, orderRoute);
