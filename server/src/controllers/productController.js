@@ -61,10 +61,6 @@ class ProductController {
       const { id } = req.params;
       const courier_id = res.locals.user.id;
       const data = req.body;
-      if (!data.status) {
-        const imgURL = req.file ? `/uploads/${req.file.filename}` : null;
-        data.imgURL = imgURL;
-      }
 
       const product = await ProductService.update(id, courier_id, data);
 

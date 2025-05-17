@@ -4,11 +4,12 @@ import CourierOrderCard from "../../components/courierOrderCard/CourierOrderCard
 import Button from "../../components/ui/buttons/button/Button";
 import { productService } from "../../services/api/productService";
 import type { OrdersType } from "../../types/orderTypes";
-
+import "./courierorders.scss";
 interface CourierOrdersProps {
   orders: OrdersType;
   setOrders(orders: OrdersType): void;
 }
+
 
 const CourierOrders: React.FC<CourierOrdersProps> = ({ orders, setOrders }) => {
   useEffect(() => {
@@ -31,17 +32,24 @@ const CourierOrders: React.FC<CourierOrdersProps> = ({ orders, setOrders }) => {
 
   return (
     <div className="courier-orders">
+      <div className="crt-overlay"></div>
+      <h1>АКТИВНЫЕ ЗАКАЗЫ</h1>
+      
       <ul className="courier-orders__list">
-        {!orders.length && <h2>Заказов сейчас нет...</h2>}
-        {orders.map((order, index) => (
-          <li key={index} className="courier-orders__item courier-order">
-            <CourierOrderCard order={order} />
-            <Button
-              buttonText="Закрыть заказ"
-              onClick={() => handleUpdate(index)}
-            />
-          </li>
-        ))}
+        {!orders.length ? (
+          <h2 className="no-orders">ЗАКАЗОВ СЕЙЧАС НЕТ...</h2>
+        ) : (
+          orders.map((order, index) => (
+            <li key={index} className="courier-orders__item courier-order">
+              <CourierOrderCard order={order} />
+              <Button
+                buttonText="ЗАКРЫТЬ ЗАКАЗ"
+                onClick={() => handleUpdate(index)}
+                className="retro-button danger"
+              />
+            </li>
+          ))
+        )}
       </ul>
     </div>
   );

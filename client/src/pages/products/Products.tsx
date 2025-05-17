@@ -3,9 +3,10 @@ import $api from "../../configs/axiosConfig";
 import Product from "../../components/product/Product";
 import type { IProductType } from "../../components/product/type";
 import Button from "../../components/ui/buttons/button/Button";
+import "./products.scss"
 
 function Products(): React.JSX.Element {
-  const [products, setProducts] = useState<IProductType[] | []>([]);
+  const [products, setProducts] = useState<IProductType[]>([]);
 
   useEffect(() => {
     getProducts();
@@ -21,26 +22,31 @@ function Products(): React.JSX.Element {
   async function handleClick(id: number): Promise<void> {
     await $api.post("/busket", { product_id: id });
     await getProducts();
-    alert("Товар добавлен в корзину!");
+    alert("ТОВАР ДОБАВЛЕН В КОРЗИНУ!");
   }
+
   return (
-    <>
-      <div>Products</div>
-      <div>
-        {products.map((p) => {
-          return (
-            <li key={p.id}>
-              <h1>Выбирай</h1>
-              <Product product={p} />;
+    <div className="products-container">
+      <div className="crt-overlay"></div>
+      <h1 className="products-title">ВЫБИРАЙТЕ ТОВАРЫ</h1>
+      
+      <div className="products-grid">
+        {products.length === 0 ? (
+          <p className="loading-message">ЗАГРУЗКА ТОВАРОВ...</p>
+        ) : (
+          products.map((p) => (
+            <div key={p.id} className="product-card">
+              <Product product={p} />
               <Button
-                buttonText="Добавить в корзину"
+                buttonText="В КОРЗИНУ"
                 onClick={() => handleClick(p.id)}
+                className="retro-button primary"
               />
-            </li>
-          );
-        })}
+            </div>
+          ))
+        )}
       </div>
-    </>
+    </div>
   );
 }
 

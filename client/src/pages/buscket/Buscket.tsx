@@ -5,10 +5,13 @@ import type { IProductType } from "../../components/product/type";
 import Button from "../../components/ui/buttons/button/Button";
 import { UserContext } from "../../app/UserContex";
 import { userService } from "../../services/api/userService";
+import "./buscket.scss"
 
 function Buscket() {
-  const [busket, setBasket] = useState([]);
+
   const contex = useContext(UserContext);
+
+  const [busket, setBasket] = useState<IProductType[]>([]);
 
   useEffect(() => {
     getProductsInBusket();
@@ -29,7 +32,6 @@ function Buscket() {
 
   async function removeProduct(idOfProduct: number): Promise<void> {
     const response = await $api.delete(`/busket/${idOfProduct}`);
-
     if (response.status === 204) {
       getProductsInBusket();
     } else {
@@ -39,7 +41,6 @@ function Buscket() {
 
   async function removeAllProducts(): Promise<void> {
     const response = await $api.delete(`/busket`);
-
     if (response.status === 204) {
       await getProductsInBusket();
     } else {
@@ -50,7 +51,6 @@ function Buscket() {
   async function buyAllBusket() {
     const productsIds = busket.map((p: IProductType) => p.id);
     const response = await $api.post("/orders", productsIds);
-
     if (response.status === 201) {
       getProductsInBusket();
       const updatedUser = await userService.update({ wallet: totalPrice });
@@ -65,26 +65,44 @@ function Buscket() {
   }, 0);
 
   return (
-    <>
-      <div>Buscket</div>
-      <div>
-        {busket.map((p: IProductType) => {
-          return (
-            <li key={p.id}>
-              <h1>Продукт</h1>
+    <div className="buscket-container">
+      <div className="crt-overlay"></div>
+      <h1 className="buscket-title">ВАША КОРЗИНА</h1>
+      
+      <div className="products-list">
+        {busket.length === 0 ? (
+          <p className="empty-message">КОРЗИНА ПУСТА</p>
+        ) : (
+          busket.map((p: IProductType) => (
+            <div key={p.id} className="product-item">
               <Product product={p} />
               <Button
-                buttonText="Удалить"
+                buttonText="УДАЛИТЬ"
                 onClick={() => removeProduct(p.id)}
+                className="retro-button danger"
               />
-            </li>
-          );
-        })}
+            </div>
+          ))
+        )}
       </div>
-      <div>Общая сумма: {totalPrice} руб.</div>
-      <Button buttonText="Очистить корзину" onClick={removeAllProducts} />
-      <Button buttonText="Оформить заказ" onClick={buyAllBusket} />
-    </>
+
+      <div className="total-section">
+        <h2>ОБЩАЯ СУММА: {totalPrice} ₽</h2>
+        <div className="action-buttons">
+          <Button 
+            buttonText="ОЧИСТИТЬ КОРЗИНУ" 
+            onClick={removeAllProducts} 
+            className="retro-button danger"
+          />
+          <Button 
+            buttonText="ОФОРМИТЬ ЗАКАЗ" 
+            onClick={buyAllBusket} 
+            className="retro-button success"
+            disabled={busket.length === 0}
+          />
+        </div>
+      </div>
+    </div>
   );
 }
 

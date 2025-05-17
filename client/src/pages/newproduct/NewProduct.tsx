@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { productService } from "../../services/api/productService";
 import type { IProductFormData } from "../../services/models/productModels";
+import "./newproduct.scss"
 
 function NewProduct() {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ function NewProduct() {
 
     try {
       if (formData.imgURL instanceof File) {
-        const formDataToSend: FormData = new FormData();
+        const formDataToSend = new FormData();
         formDataToSend.append("name", formData.name);
         formDataToSend.append("price", formData.price);
         formDataToSend.append("discount", formData.discount);
@@ -51,96 +52,71 @@ function NewProduct() {
       setIsSubmitting(false);
     }
   };
+
   return (
-    <div
-      style={{
-        padding: "20px",
-        maxWidth: "500px",
-        margin: "0 auto",
-        marginTop: "50px",
-      }}
-    >
-      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
-        Добавить новый товар
-      </h2>
+    <div className="new-product">
+      <div className="crt-overlay"></div>
+      
+      <div className="form-container">
+        <h2>Добавить новый товар</h2>
 
-      {error && (
-        <div style={{ color: "red", marginBottom: "15px" }}>{error}</div>
-      )}
+        {error && <div className="error-message">{error}</div>}
 
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "15px" }}>
-          <label style={{ display: "block", marginBottom: "5px" }}>
-            Название товара:
-          </label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            required
-            style={{ width: "100%", padding: "8px" }}
-          />
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Название товара:</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-        <div style={{ marginBottom: "15px" }}>
-          <label style={{ display: "block", marginBottom: "5px" }}>
-            Цена (руб):
-          </label>
-          <input
-            type="number"
-            name="price"
-            value={formData.price}
-            onChange={handleInputChange}
-            min="1"
-            required
-            style={{ width: "100%", padding: "8px" }}
-          />
-        </div>
+          <div className="form-group">
+            <label>Цена (руб):</label>
+            <input
+              type="number"
+              name="price"
+              value={formData.price}
+              onChange={handleInputChange}
+              min="1"
+              required
+            />
+          </div>
 
-        <div style={{ marginBottom: "15px" }}>
-          <label style={{ display: "block", marginBottom: "5px" }}>
-            Скидка (%):
-          </label>
-          <input
-            type="number"
-            name="discount"
-            value={formData.discount}
-            onChange={handleInputChange}
-            min="0"
-            max="99"
-            style={{ width: "100%", padding: "8px" }}
-          />
-        </div>
+          <div className="form-group">
+            <label>Скидка (%):</label>
+            <input
+              type="number"
+              name="discount"
+              value={formData.discount}
+              onChange={handleInputChange}
+              min="0"
+              max="99"
+            />
+          </div>
 
-        <div style={{ marginBottom: "15px" }}>
-          <label style={{ display: "block", marginBottom: "5px" }}>
-            Изображение товара:
-          </label>
-          <input
-            type="file"
-            name="imgURL"
-            accept="image/*"
-            onChange={handleFileChange}
-            style={{ width: "100%", padding: "8px" }}
-          />
-        </div>
+          <div className="form-group">
+            <label>Изображение товара:</label>
+            <input
+              type="file"
+              name="imgURL"
+              accept="image/*"
+              onChange={handleFileChange}
+            />
+          </div>
 
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          style={{
-            width: "100%",
-            padding: "10px",
-            backgroundColor: isSubmitting ? "#cccccc" : "#4CAF50",
-            color: "white",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-          {isSubmitting ? "Создание..." : "Создать товар"}
-        </button>
-      </form>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className={`submit-button ${isSubmitting ? 'disabled' : ''}`}
+          >
+            {isSubmitting ? "Создание..." : "Создать товар"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
