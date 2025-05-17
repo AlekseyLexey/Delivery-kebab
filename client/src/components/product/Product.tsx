@@ -18,10 +18,6 @@ function Product({ product }: ProductProps): React.JSX.Element {
           />
         </div>
 
-        <div>Исходная цена: {product.price} </div>
-        <div>Скидка: {product.discount} </div>
-        <div>Цена со скидкой: {product.endPrice} </div>
-
         <div>
           Исходная цена: {Number(product.price).toLocaleString("ru-RU")} Руб{" "}
         </div>
