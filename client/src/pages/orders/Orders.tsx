@@ -5,7 +5,7 @@ import Product from "../../components/product/Product";
 import "./orders.scss"
 
 function Orders(): React.JSX.Element {
-  const [orders, setOrders] = useState<IProductType[]>([]);
+  const [orders, setOrders] = useState<Array<IProductType> | []>([]);
 
   useEffect(() => {
     getOrdersFromBusket();
@@ -18,24 +18,33 @@ function Orders(): React.JSX.Element {
     }
   }
 
+  const activeOrders = orders.filter((order) => order?.status === "delivery");
+  const completedOrders = orders.filter((order) => order?.status === "sold");
+
   return (
-    <div className="orders-container">
-      <div className="crt-overlay"></div>
-      <h1 className="orders-title">ВАШИ ЗАКАЗЫ</h1>
-      
-      <div className="orders-list">
-        {orders.length === 0 ? (
-          <p className="empty-message">ЗАКАЗОВ ПОКА НЕТ</p>
-        ) : (
-          orders.map((p: IProductType) => (
-            <div key={p.id} className="order-item">
-              <h2>ЗАКАЗ #{p.id}</h2>
-              <Product product={p} />
-            </div>
-          ))
-        )}
-      </div>
-    </div>
+    <>
+      <h1>Все ваши заказы</h1>
+
+      <h2>Активные заказы</h2>
+      <ul>
+        {activeOrders.map((p: IProductType) => (
+          <li key={p.id}>
+            <h3>Заказ</h3>
+            <Product product={p} />
+          </li>
+        ))}
+      </ul>
+
+      <h2>Завершенные заказы</h2>
+      <ul>
+        {completedOrders.map((p: IProductType) => (
+          <li key={p.id}>
+            <h3>Заказ</h3>
+            <Product product={p} />
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
 

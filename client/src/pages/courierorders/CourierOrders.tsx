@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
-import type { OrdersType } from "../../types/orderTypes";
+import React, { useEffect } from "react";
 import { orderSrvice } from "../../services/api/orderService";
 import CourierOrderCard from "../../components/courierOrderCard/CourierOrderCard";
 import Button from "../../components/ui/buttons/button/Button";
 import { productService } from "../../services/api/productService";
+import type { OrdersType } from "../../types/orderTypes";
 import "./courierorders.scss";
+interface CourierOrdersProps {
+  orders: OrdersType;
+  setOrders(orders: OrdersType): void;
+}
 
-const CourierOrders: React.FC = () => {
-  const [orders, setOrders] = useState<OrdersType>([]);
 
+const CourierOrders: React.FC<CourierOrdersProps> = ({ orders, setOrders }) => {
   useEffect(() => {
     fetchingOrders();
   }, []);

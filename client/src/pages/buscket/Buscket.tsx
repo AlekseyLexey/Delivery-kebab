@@ -1,16 +1,27 @@
-import React, { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import $api from "../../configs/axiosConfig";
 import Product from "../../components/product/Product";
 import type { IProductType } from "../../components/product/type";
 import Button from "../../components/ui/buttons/button/Button";
+import { UserContext } from "../../app/UserContex";
+import { userService } from "../../services/api/userService";
 import "./buscket.scss"
 
-function Buscket(): React.JSX.Element {
+function Buscket() {
+
+  const contex = useContext(UserContext);
+
   const [busket, setBasket] = useState<IProductType[]>([]);
 
   useEffect(() => {
     getProductsInBusket();
   }, []);
+
+  if (!contex) {
+    return;
+  }
+
+  const { setUser } = contex;
 
   async function getProductsInBusket(): Promise<void> {
     const response = await $api.get("/busket");
@@ -31,7 +42,7 @@ function Buscket(): React.JSX.Element {
   async function removeAllProducts(): Promise<void> {
     const response = await $api.delete(`/busket`);
     if (response.status === 204) {
-      getProductsInBusket();
+      await getProductsInBusket();
     } else {
       alert("Не удалось удалить :с");
     }
@@ -42,6 +53,8 @@ function Buscket(): React.JSX.Element {
     const response = await $api.post("/orders", productsIds);
     if (response.status === 201) {
       getProductsInBusket();
+      const updatedUser = await userService.update({ wallet: totalPrice });
+      setUser(updatedUser);
     } else {
       alert("Не удалось оформить заказ :с");
     }
