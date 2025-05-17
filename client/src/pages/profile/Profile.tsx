@@ -3,6 +3,7 @@ import UserInfo from "../../components/userInfo/UserInfo";
 import ActionCustomerWallet from "../../components/ActionCustomerWallet";
 import { UserContext } from "../../app/UserContex";
 import Spiner from "../../components/Spinner";
+import './profile.scss'
 
 const Profile: React.FC = () => {
   const contex = useContext(UserContext);

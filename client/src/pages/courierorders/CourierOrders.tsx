@@ -4,6 +4,7 @@ import { orderSrvice } from "../../services/api/orderService";
 import CourierOrderCard from "../../components/courierOrderCard/CourierOrderCard";
 import Button from "../../components/ui/buttons/button/Button";
 import { productService } from "../../services/api/productService";
+import "./courierorders.scss";
 
 const CourierOrders: React.FC = () => {
   const [orders, setOrders] = useState<OrdersType>([]);
@@ -28,17 +29,24 @@ const CourierOrders: React.FC = () => {
 
   return (
     <div className="courier-orders">
+      <div className="crt-overlay"></div>
+      <h1>АКТИВНЫЕ ЗАКАЗЫ</h1>
+      
       <ul className="courier-orders__list">
-        {!orders.length && <h2>Заказов сейчас нет...</h2>}
-        {orders.map((order, index) => (
-          <li key={index} className="courier-orders__item courier-order">
-            <CourierOrderCard order={order} />
-            <Button
-              buttonText="Закрыть заказ"
-              onClick={() => handleUpdate(index)}
-            />
-          </li>
-        ))}
+        {!orders.length ? (
+          <h2 className="no-orders">ЗАКАЗОВ СЕЙЧАС НЕТ...</h2>
+        ) : (
+          orders.map((order, index) => (
+            <li key={index} className="courier-orders__item courier-order">
+              <CourierOrderCard order={order} />
+              <Button
+                buttonText="ЗАКРЫТЬ ЗАКАЗ"
+                onClick={() => handleUpdate(index)}
+                className="retro-button danger"
+              />
+            </li>
+          ))
+        )}
       </ul>
     </div>
   );

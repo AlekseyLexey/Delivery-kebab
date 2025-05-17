@@ -4,12 +4,11 @@ import { productService } from "../../services/api/productService";
 import Product from "../../components/product/Product";
 import Button from "../../components/ui/buttons/button/Button";
 import { useNavigate } from "react-router-dom";
+import "./courierProducts.scss"
 
 const CourierProducts: React.FC = () => {
   const [products, setProducts] = useState<IProductType[]>([]);
-  const [editingProduct, setEditingProduct] = useState<IProductType | null>(
-    null
-  );
+  const [editingProduct, setEditingProduct] = useState<IProductType | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -65,107 +64,82 @@ const CourierProducts: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: 20 }}>
-      <Button
-        buttonText="Добавить товар"
-        onClick={() => navigate("/new-product")}
-        style={{ marginBottom: 20 }}
-      />
+    <div className="courier-products">
+      <div className="crt-overlay"></div>
+      
+      <div className="header">
+        <h1>УПРАВЛЕНИЕ ТОВАРАМИ</h1>
+        <Button 
+          buttonText="ДОБАВИТЬ ТОВАР" 
+          onClick={() => navigate("/new-product")} 
+          className="retro-button primary"
+        />
+      </div>
 
-      <div style={{ display: "grid", gap: 15 }}>
+      <div className="products-grid">
         {products.map((product) => (
-          <div
-            key={product.id}
-            style={{ border: "1px solid #eee", padding: 15, borderRadius: 8 }}
-          >
+          <div key={product.id} className="product-card">
             <Product product={product} />
-            <div style={{ display: "flex", gap: 10, marginTop: 10 }}>
+            <div className="product-actions">
               <Button
-                buttonText="Изменить"
+                buttonText="ИЗМЕНИТЬ"
                 onClick={() => handleEdit(product)}
-                style={{ background: "#2196f3" }}
+                className="retro-button"
               />
               <Button
-                buttonText="Удалить"
+                buttonText="УДАЛИТЬ"
                 onClick={() => handleDelete(product.id)}
-                style={{ background: "#f44336" }}
+                className="retro-button danger"
               />
             </div>
           </div>
         ))}
       </div>
 
-      {/* Модалка */}
       {editingProduct && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: "rgba(0,0,0,0.5)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 1000,
-          }}
-        >
-          <div
-            style={{
-              background: "white",
-              padding: 20,
-              borderRadius: 8,
-              width: "90%",
-              maxWidth: 400,
-            }}
-          >
-            <h3>Редактирование товара</h3>
+        <div className="edit-modal">
+          <div className="modal-content">
+            <h3>РЕДАКТИРОВАНИЕ ТОВАРА</h3>
 
-            <div style={{ margin: "15px 0" }}>
-              <div style={{ marginBottom: 10 }}>
-                <div>Название:</div>
-                <input
-                  name="name"
-                  value={editingProduct.name}
-                  onChange={handleChange}
-                  style={{ width: "100%", padding: 8 }}
-                />
-              </div>
-
-              <div style={{ marginBottom: 10 }}>
-                <div>Цена:</div>
-                <input
-                  type="number"
-                  name="price"
-                  value={editingProduct.price}
-                  onChange={handleChange}
-                  style={{ width: "100%", padding: 8 }}
-                />
-              </div>
-
-              <div style={{ marginBottom: 10 }}>
-                <div>Скидка (%):</div>
-                <input
-                  type="number"
-                  name="discount"
-                  value={editingProduct.discount}
-                  onChange={handleChange}
-                  style={{ width: "100%", padding: 8 }}
-                />
-              </div>
+            <div className="form-group">
+              <label>Название:</label>
+              <input
+                name="name"
+                value={editingProduct.name}
+                onChange={handleChange}
+              />
             </div>
 
-            <div style={{ display: "flex", gap: 10 }}>
+            <div className="form-group">
+              <label>Цена:</label>
+              <input
+                type="number"
+                name="price"
+                value={editingProduct.price}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Скидка (%):</label>
+              <input
+                type="number"
+                name="discount"
+                value={editingProduct.discount}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="modal-actions">
               <Button
-                buttonText="Сохранить"
+                buttonText="СОХРАНИТЬ"
                 onClick={handleSave}
-                style={{ background: "#4caf50", flex: 1 }}
+                className="retro-button success"
               />
               <Button
-                buttonText="Отмена"
+                buttonText="ОТМЕНА"
                 onClick={() => setEditingProduct(null)}
-                style={{ flex: 1 }}
+                className="retro-button"
               />
             </div>
           </div>

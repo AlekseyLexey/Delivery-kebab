@@ -1,12 +1,119 @@
+// @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 .header {
-  width: 100vw;
-  background-color: #888888;
+  width: 100%;
+  background-color: #0a0a12;
   z-index: 1000;
+  position: relative;
+  border-bottom: 3px solid #ff00aa;
+  box-shadow: 0 0 30px rgba(255, 0, 170, 0.3);
 
   &__content {
     display: flex;
-    height: 100px;
-    justify-content: space-between;
+    height: 80px;
+    justify-content: space-around;
     align-items: center;
+    padding: 0 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+}
+
+.crt-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(rgba(18, 16, 16, 0.2) 50%, rgba(0, 0, 0, 0.25) 50%),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 3px, 4px 100%;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  animation: scanline 8s linear infinite;
+}
+
+.retro-button {
+  font-family: 'Press Start 2P', cursive;
+  background: transparent;
+  color: #00ff9d;
+  border: 2px solid #00ff9d;
+  padding: 10px 15px;
+  font-size: 0.6rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 8px #00ff9d, inset 0 0 8px #00ff9d;
+  min-width: 120px;
+
+  &:hover {
+    background: #00ff9d;
+    color: black;
+    box-shadow: 0 0 15px #00ff9d;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &.danger {
+    color: #ff00aa;
+    border-color: #ff00aa;
+    box-shadow: 0 0 8px #ff00aa, inset 0 0 8px #ff00aa;
+
+    &:hover {
+      background: #ff00aa;
+      color: black;
+    }
+  }
+
+  &.success {
+    color: #00ff9d;
+    border-color: #00ff9d;
+    box-shadow: 0 0 8px #00ff9d, inset 0 0 8px #00ff9d;
+
+    &:hover {
+      background: #00ff9d;
+      color: black;
+    }
+  }
+
+  &.primary {
+    color: #0099ff;
+    border-color: #0099ff;
+    box-shadow: 0 0 8px #0099ff, inset 0 0 8px #0099ff;
+
+    &:hover {
+      background: #0099ff;
+      color: black;
+    }
+  }
+}
+
+@keyframes scanline {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .header__content {
+    height: auto;
+    padding: 15px;
+    justify-content: center;
+  }
+  
+  .retro-button {
+    font-size: 0.5rem;
+    padding: 8px 10px;
+    min-width: 100px;
   }
 }
