@@ -17,7 +17,7 @@ const CourierOrderCard: React.FC<ICourierOrderCard> = ({ order }) => {
         {order.products.map((p) => (
           <li key={p.id} className="order-list__item list-item">
             <h4 className="list-item__title">Продукт: {p.name}</h4>
-            <div className="list-item__img-wrapper">
+            <div className="product-image-wrapper">
               <img src={`http://localhost:3000${p.imgURL}`} alt={p.name} />
             </div>
           </li>
