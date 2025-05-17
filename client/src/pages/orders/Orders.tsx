@@ -17,19 +17,32 @@ function Orders(): React.JSX.Element {
     }
   }
 
+  const activeOrders = orders.filter((order) => order.status === "delivery");
+  const completedOrders = orders.filter((order) => order.status === "sold");
+
   return (
     <>
-      <div>Orders</div>
-      <div>
-        {orders.map((p: IProductType) => {
-          return (
-            <li key={p.id}>
-              <h1>Заказ</h1>
-              <Product product={p} />
-            </li>
-          );
-        })}
-      </div>
+      <h1>Все ваши заказы</h1>
+
+      <h2>Активные заказы</h2>
+      <ul>
+        {activeOrders.map((p: IProductType) => (
+          <li key={p.id}>
+            <h3>Заказ</h3>
+            <Product product={p} />
+          </li>
+        ))}
+      </ul>
+
+      <h2>Завершенные заказы</h2>
+      <ul>
+        {completedOrders.map((p: IProductType) => (
+          <li key={p.id}>
+            <h3>Заказ</h3>
+            <Product product={p} />
+          </li>
+        ))}
+      </ul>
     </>
   );
 }
