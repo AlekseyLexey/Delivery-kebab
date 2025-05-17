@@ -97,13 +97,12 @@ const updateUserService = async (id, data) => {
   const user = await User.findByPk(id);
   if (!user) throw new HttpError(404, "Пользователь не найден");
 
+  const walletInteger = parseInt(data.wallet);
+
   const topUpWalletData = data.wallet
     ? {
         ...user,
-        wallet:
-          user.role === "courier"
-            ? Number(user.wallet) + Number(data.wallet)
-            : Number(user.wallet) - Number(data.wallet),
+        wallet: Number(user.wallet) + walletInteger,
       }
     : user;
 
@@ -111,25 +110,24 @@ const updateUserService = async (id, data) => {
   return user;
 };
 
-
 const updateLocationService = async (userId, lat, lng) => {
   const user = await User.findByPk(userId);
-  if (!user) throw new HttpError(404, "Пользователь не найден")
+  if (!user) throw new HttpError(404, "Пользователь не найден");
 
-  if (user.role !== 'courier') {
+  if (user.role !== "courier") {
     throw new HttpError(403, "Только курьеры могут обновлять локацию");
   }
 
   await user.update({ location: `${lat} ${lng}` });
-  return user
-}
+  return user;
+};
 
 const getLocationService = async (userId) => {
   const user = await User.findByPk(userId);
-  
-  if(!user) throw new HttpError(404, "Пользователь не найден");
-  return user.location
-}
+
+  if (!user) throw new HttpError(404, "Пользователь не найден");
+  return user.location;
+};
 
 module.exports = {
   registrationService,
@@ -138,5 +136,5 @@ module.exports = {
   refreshService,
   updateUserService,
   updateLocationService,
-  getLocationService
+  getLocationService,
 };

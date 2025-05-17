@@ -1,3 +1,3 @@
 export interface IUpdateWalletData {
-  wallet: number;
+  wallet: string;
 }

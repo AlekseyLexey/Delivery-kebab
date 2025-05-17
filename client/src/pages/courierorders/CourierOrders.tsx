@@ -5,13 +5,20 @@ import Button from "../../components/ui/buttons/button/Button";
 import { productService } from "../../services/api/productService";
 import type { OrdersType } from "../../types/orderTypes";
 import "./courierorders.scss";
+import { userService } from "../../services/api/userService";
+import type { IUser } from "../../types/userTypes";
+
 interface CourierOrdersProps {
   orders: OrdersType;
   setOrders(orders: OrdersType): void;
+  setUser(user: IUser): void;
 }
 
-
-const CourierOrders: React.FC<CourierOrdersProps> = ({ orders, setOrders }) => {
+const CourierOrders: React.FC<CourierOrdersProps> = ({
+  orders,
+  setOrders,
+  setUser,
+}) => {
   useEffect(() => {
     fetchingOrders();
   }, []);
@@ -27,14 +34,19 @@ const CourierOrders: React.FC<CourierOrdersProps> = ({ orders, setOrders }) => {
         await productService.update(product.id, { status: "sold" })
     );
 
-    Promise.all(updated).then(() => fetchingOrders());
+    Promise.all(updated)
+      .then(() => {
+        fetchingOrders();
+        return userService.update({ wallet: String(orders[id].totalAmount) });
+      })
+      .then(setUser);
   };
 
   return (
     <div className="courier-orders">
       <div className="crt-overlay"></div>
       <h1>АКТИВНЫЕ ЗАКАЗЫ</h1>
-      
+
       <ul className="courier-orders__list">
         {!orders.length ? (
           <h2 className="no-orders">ЗАКАЗОВ СЕЙЧАС НЕТ...</h2>

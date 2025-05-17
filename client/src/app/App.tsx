@@ -83,7 +83,13 @@ function App() {
         <Route path="/buscket" element={<Buscket />} />
         <Route
           path="/courier-orders"
-          element={<CourierOrders orders={orders} setOrders={setOrders} />}
+          element={
+            <CourierOrders
+              setUser={setUser}
+              orders={orders}
+              setOrders={setOrders}
+            />
+          }
         />
         <Route path="/courier-products" element={<CourierProducts />} />
       </Routes>

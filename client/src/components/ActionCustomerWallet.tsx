@@ -15,7 +15,7 @@ const ActionCustomerWallet: React.FC<ActionCustomerWalletProps> = ({
 
   const turnUpWallet = async () => {
     const updatedUser = await userService.update({
-      wallet: parseInt(balanceInput),
+      wallet: balanceInput,
     });
     setBalanceInput("");
     alert(`Баланс пополнен на сумму ${balanceInput}`);

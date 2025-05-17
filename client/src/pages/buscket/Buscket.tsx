@@ -5,10 +5,9 @@ import type { IProductType } from "../../components/product/type";
 import Button from "../../components/ui/buttons/button/Button";
 import { UserContext } from "../../app/UserContex";
 import { userService } from "../../services/api/userService";
-import "./buscket.scss"
+import "./buscket.scss";
 
 function Buscket() {
-
   const contex = useContext(UserContext);
 
   const [busket, setBasket] = useState<IProductType[]>([]);
@@ -53,7 +52,9 @@ function Buscket() {
     const response = await $api.post("/orders", productsIds);
     if (response.status === 201) {
       getProductsInBusket();
-      const updatedUser = await userService.update({ wallet: totalPrice });
+      const updatedUser = await userService.update({
+        wallet: `-${totalPrice}`,
+      });
       setUser(updatedUser);
     } else {
       alert("Не удалось оформить заказ :с");
@@ -68,7 +69,7 @@ function Buscket() {
     <div className="buscket-container">
       <div className="crt-overlay"></div>
       <h1 className="buscket-title">ВАША КОРЗИНА</h1>
-      
+
       <div className="products-list">
         {busket.length === 0 ? (
           <p className="empty-message">КОРЗИНА ПУСТА</p>
@@ -89,14 +90,14 @@ function Buscket() {
       <div className="total-section">
         <h2>ОБЩАЯ СУММА: {totalPrice} ₽</h2>
         <div className="action-buttons">
-          <Button 
-            buttonText="ОЧИСТИТЬ КОРЗИНУ" 
-            onClick={removeAllProducts} 
+          <Button
+            buttonText="ОЧИСТИТЬ КОРЗИНУ"
+            onClick={removeAllProducts}
             className="retro-button danger"
           />
-          <Button 
-            buttonText="ОФОРМИТЬ ЗАКАЗ" 
-            onClick={buyAllBusket} 
+          <Button
+            buttonText="ОФОРМИТЬ ЗАКАЗ"
+            onClick={buyAllBusket}
             className="retro-button success"
             disabled={busket.length === 0}
           />
