@@ -42,9 +42,16 @@ class OrderService {
       attributes: {
         exclude: ["buyer_id", "updatedAt"],
       },
+      raw: true,
+      nest: true,
     });
 
-    return products;
+    const productsWithDiscontPrice = products.map((p) => ({
+      ...p,
+      endPrice: calculateDiscountedPrice(p.price, p.discount),
+    }));
+
+    return productsWithDiscontPrice;
   }
 }
 

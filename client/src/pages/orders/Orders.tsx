@@ -24,7 +24,7 @@ function Orders(): React.JSX.Element {
   return (
     <div className="orders-container">
       <div className="crt-overlay"></div>
-      
+
       <h1 className="orders-title">ВАШИ ЗАКАЗЫ</h1>
 
       <div className="orders-section">
