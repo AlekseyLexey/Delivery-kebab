@@ -120,7 +120,7 @@ const updateLocationService = async (userId, lat, lng) => {
     throw new HttpError(403, "Только курьеры могут обновлять локацию");
   }
 
-  await user.update({ location: {lat, lng } });
+  await user.update({ location: `${lat} ${lng}` });
   return user
 }
 

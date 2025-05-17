@@ -9,6 +9,7 @@ const {
 } = require("../services/userService");
 const cookieConfig = require("../config/cookieConfig");
 const HttpError = require("../exceptions/HttpError");
+const generateCourierLocation = require("../helpers/generateCourierLocation");
 
 const registration = async (req, res, next) => {
   try {
@@ -82,7 +83,7 @@ const updateUser = async (req, res, next) => {
 const updateLocation = async (req, res, next) => {
   try {
     const { id } = res.locals.user;
-    // const { lat, lng } = req.body; 
+    const { lat, lng } = generateCourierLocation(); 
 
     if(!lat || !lng) {
       throw new HttpError(400, "Координаты обязательны!");
