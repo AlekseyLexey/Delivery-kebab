@@ -4,7 +4,7 @@ import type { IProductType } from "../../components/product/type";
 import Product from "../../components/product/Product";
 
 function Orders(): React.JSX.Element {
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState<Array<IProductType> | []>([]);
 
   useEffect(() => {
     getOrdersFromBusket();
@@ -17,8 +17,8 @@ function Orders(): React.JSX.Element {
     }
   }
 
-  const activeOrders = orders.filter((order) => order.status === "delivery");
-  const completedOrders = orders.filter((order) => order.status === "sold");
+  const activeOrders = orders.filter((order) => order?.status === "delivery");
+  const completedOrders = orders.filter((order) => order?.status === "sold");
 
   return (
     <>
