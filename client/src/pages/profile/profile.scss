@@ -1,3 +1,5 @@
+// @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 .profile {
   font-family: 'Press Start 2P', cursive;
   background: #0a0a12;
@@ -37,24 +39,68 @@
       color: #ff00aa;
       text-shadow: 0 0 10px #ff00aa;
       margin-top: 0;
+      margin-bottom: 30px;
       border-bottom: 2px dashed #00ff9d;
       padding-bottom: 10px;
+      text-align: center;
+    }
+  }
+
+  .wallet-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    label {
+      color: #00ff9d;
+      font-size: 0.8rem;
+      text-shadow: 0 0 5px #00ff9d;
     }
   }
 }
 
-// Общие стили для кнопок в ретро-стиле
+.retro-input {
+  font-family: 'Press Start 2P', cursive;
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid #00ff9d;
+  color: white;
+  padding: 12px 15px;
+  font-size: 0.8rem;
+  transition: all 0.3s;
+  box-shadow: 0 0 10px rgba(0, 255, 157, 0.3) inset;
+
+  &:focus {
+    outline: none;
+    border-color: #ff00aa;
+    box-shadow: 0 0 15px #ff00aa, 
+                0 0 10px rgba(0, 255, 157, 0.3) inset;
+  }
+
+  &::placeholder {
+    color: #555;
+    opacity: 1;
+  }
+}
+
 .retro-button {
   font-family: 'Press Start 2P', cursive;
   background: transparent;
   color: #00ff9d;
   border: 3px solid #00ff9d;
-  padding: 12px 24px;
-  font-size: 0.8rem;
+  padding: 15px;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.3s;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   position: relative;
   overflow: hidden;
   box-shadow: 0 0 10px #00ff9d, inset 0 0 10px #00ff9d;
@@ -70,16 +116,10 @@
     transform: translateY(1px);
   }
 
-  &.danger {
-    color: #ff00aa;
-    border-color: #ff00aa;
-    box-shadow: 0 0 10px #ff00aa, inset 0 0 10px #ff00aa;
-
-    &:hover {
-      background: #ff00aa;
-      color: black;
-      box-shadow: 0 0 20px #ff00aa;
-    }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
   }
 
   &.success {
@@ -87,22 +127,60 @@
     border-color: #00ff9d;
     box-shadow: 0 0 10px #00ff9d, inset 0 0 10px #00ff9d;
 
-    &:hover {
+    &:hover:not(:disabled) {
       background: #00ff9d;
       color: black;
       box-shadow: 0 0 20px #00ff9d;
     }
   }
+}
 
-  &.primary {
-    color: #0099ff;
-    border-color: #0099ff;
-    box-shadow: 0 0 10px #0099ff, inset 0 0 10px #0099ff;
+.crt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(rgba(18, 16, 16, 0.2) 50%, rgba(0, 0, 0, 0.25) 50%),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 3px, 4px 100%;
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: overlay;
+  animation: scanline 8s linear infinite;
+}
 
-    &:hover {
-      background: #0099ff;
-      color: black;
-      box-shadow: 0 0 20px #0099ff;
+@keyframes scanline {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile {
+    padding: 20px;
+    
+    .user-info-container,
+    .wallet-section {
+      padding: 20px;
+    }
+    
+    .wallet-form {
+      max-width: 100%;
+    }
+    
+    .retro-input {
+      padding: 10px;
+      font-size: 0.7rem;
+    }
+    
+    .retro-button {
+      padding: 12px;
+      font-size: 0.8rem;
     }
   }
 }
